@@ -1952,7 +1952,8 @@ struct enum_base {
             [](const object &arg) -> str {
                 handle type = type::handle_of(arg);
                 object type_name = type.attr("__name__");
-                return pybind11::str("<{}.{}: {}>").format(type_name, enum_name(arg), int_(arg));
+                // Falcor relies on generating "Type.Value" string representations for serialization.
+                return pybind11::str("{}.{}").format(type_name, enum_name(arg));
             },
             name("__repr__"),
             is_method(m_base));
